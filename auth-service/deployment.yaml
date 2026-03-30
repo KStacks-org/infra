@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: ghcr.io/kstacks-org/auth-service:master-b3e1f33
+          ports:
+            - containerPort: 1867
+          envFrom:
+            - configMapRef:
+                name: auth-config
+            - configMapRef:
+                name: db-creds
+            - secretRef:
+                name: auth-secret
+            - secretRef:
+                name: db-creds-secret
+          livenessProbe:
+            httpGet:
+              path: /auth/actuator/health/liveness
+              port: 1867
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /auth/actuator/health/readiness
+              port: 1867
+            initialDelaySeconds: 10
+            periodSeconds: 5

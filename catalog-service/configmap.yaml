@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-config
+data:
+  SPRING_PROFILES_ACTIVE: prod
+  DB_NAME: catalog_db
+  LOAD_DATA: "false"
+  DB_DDL_AUTO: validate

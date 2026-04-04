@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+        - name: catalog
+          image: ghcr.io/kstacks-org/catalog-service:8973ce9110756bd622d4d79bb238add2ae5cc04c
+          ports:
+            - containerPort: 41619
+          envFrom:
+            - configMapRef:
+                name: catalog-config
+            - configMapRef:
+                name: db-creds
+            - secretRef:
+                name: catalog-secret
+          livenessProbe:
+            httpGet:
+              path: /catalog/actuator/health/liveness
+              port: 41619
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /catalog/actuator/health/readiness
+              port: 41619
+            initialDelaySeconds: 10
+            periodSeconds: 5

@@ -20,7 +20,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: catalog-config
-            - configMapRef:
+            - secretRef:
                 name: db-creds
             - secretRef:
                 name: catalog-secret

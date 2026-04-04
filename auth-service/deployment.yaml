@@ -24,8 +24,6 @@ spec:
                 name: db-creds
             - secretRef:
                 name: auth-secret
-            - secretRef:
-                name: db-creds-secret
           livenessProbe:
             httpGet:
               path: /auth/actuator/health/liveness

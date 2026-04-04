@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: portal-frontend
-          image: ghcr.io/kstacks-org/portal-frontend:sha-d1501df
+          image: ghcr.io/kstacks-org/portal-frontend:sha-4a6bb43
           ports:
             - containerPort: 3000
           # Nitro servers usually respond with 200 on the root path

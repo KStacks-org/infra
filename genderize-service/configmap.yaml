@@ -4,6 +4,6 @@ metadata:
   name: genderize-config
 data:
   DB_NAME: genderize_db
-  LOAD_CSV: "true"
+  LOAD_CSV: "false"
   DB_ENGINE: postgresql
 

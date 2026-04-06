@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
-    - name: https
+    - name: https-wildcard
       protocol: HTTPS
       port: 8443
       hostname: "*.kstacks.org"
@@ -16,10 +16,26 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: kstacks-api-tls
-    - name: http
+    - name: https-apex
+      protocol: HTTPS
+      port: 8443
+      hostname: "kstacks.org"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: kstacks-api-tls
+    - name: http-wildcard
       protocol: HTTP
       port: 8000
       hostname: "*.kstacks.org"
       allowedRoutes:
         namespaces:
           from: Same
+    - name: http-apex
+      protocol: HTTP
+      port: 8000
+      hostname: "kstacks.org"
+      allowedRoutes:
+        namespaces:
+          from: Same
+          

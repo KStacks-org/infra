@@ -5,4 +5,5 @@ metadata:
 data:
   DB_NAME: genderize_db
   LOAD_CSV: "true"
+  DB_ENGINE: postgresql
 

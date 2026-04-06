@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genderize-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: genderize
+  template:
+    metadata:
+      labels:
+        app: genderize
+    spec:
+      containers:
+        - name: genderize
+          image: ghcr.io/kstacks-org/genderize-service:production-877ec98
+          ports:
+            - containerPort: 64843
+          envFrom:
+            - configMapRef:
+                name: genderize-config
+            - secretRef:
+                name: db-creds
+            - secretRef:
+                name: genderize-secret
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: 64843
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: 64843
+            initialDelaySeconds: 10
+            periodSeconds: 5

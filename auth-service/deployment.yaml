@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: ghcr.io/kstacks-org/auth-service:master-b3e1f33
+          image: ""
           ports:
             - containerPort: 1867
           envFrom:

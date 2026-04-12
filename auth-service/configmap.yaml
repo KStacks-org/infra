@@ -14,4 +14,5 @@ data:
   APP_OAUTH2_HOSTED_DOMAIN: stu.kau.edu.sa
   SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_SCOPE: profile,email
   SERVER_FORWARD_HEADERS_STRATEGY: framework
-  APP_COOKIE_DOMAIN: kstacks.org  
+  APP_COOKIE_DOMAIN: kstacks.org
+  GENDERIZE_SERVICE_URL: http://genderize-service  

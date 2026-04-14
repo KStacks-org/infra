@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: jwt-auth
+spec:
+  plugin:
+    jwt:
+      secret: |
+        -----BEGIN PUBLIC KEY-----
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7pscfM6VEu/5/0ENP3KTi+p4MNWw
+        JGQvZHZYTiOthrLCYleLqILgItdNveCWY3jgDoZczw09pDJrqucjjLVriw==
+        -----END PUBLIC KEY-----
+      require:
+        iss: "kstack"
+        type: "access"
+      cookieName: "access_token"
+      forwardToken: "true"

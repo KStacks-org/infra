@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groups-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: groups
+  template:
+    metadata:
+      labels:
+        app: groups
+    spec:
+      containers:
+        - name: groups
+          image: ghcr.io/kstacks-org/groups-service:master-7a6fd3a
+          ports:
+            - containerPort: 65980
+          envFrom:
+            - configMapRef:
+                name: groups-config
+            - secretRef:
+                name: db-creds
+            - secretRef:
+                name: groups-secret
+          livenessProbe:
+            httpGet:
+              path: /groups/actuator/health/liveness
+              port: 65980
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /groups/actuator/health/readiness
+              port: 65980
+            initialDelaySeconds: 10
+            periodSeconds: 5

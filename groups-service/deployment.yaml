@@ -16,7 +16,7 @@ spec:
         - name: groups
           image: ghcr.io/kstacks-org/groups-service:master-7a6fd3a
           ports:
-            - containerPort: 65980
+            - containerPort: 6598
           envFrom:
             - configMapRef:
                 name: groups-config
@@ -27,12 +27,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /groups/actuator/health/liveness
-              port: 65980
+              port: 6598
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /groups/actuator/health/readiness
-              port: 65980
+              port: 6598
             initialDelaySeconds: 10
             periodSeconds: 5

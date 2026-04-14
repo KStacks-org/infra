@@ -7,6 +7,6 @@ spec:
     app: groups
   ports:
     - port: 80
-      targetPort: 65980
+      targetPort: 6598
   type: ClusterIP      # internal only
   

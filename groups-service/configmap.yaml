@@ -5,4 +5,5 @@ metadata:
 data:
   SPRING_PROFILES_ACTIVE: prod
   DB_NAME: groups_db
+  DB_DDL_AUTO: update
   CATALOG_URL: http://catalog-service

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: catalog
-          image: ghcr.io/kstacks-org/catalog-service:2e5cead077b3d4d373691dbff50161349c00beff
+          image: ghcr.io/kstacks-org/catalog:master-cf328da
           ports:
             - containerPort: 41619
           envFrom:

@@ -4,7 +4,7 @@ metadata:
   name: jwt-auth
 spec:
   plugin:
-    jwt:
+    jwt-middleware:
       secret: |
         -----BEGIN PUBLIC KEY-----
         MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7pscfM6VEu/5/0ENP3KTi+p4MNWw

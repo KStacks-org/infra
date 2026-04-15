@@ -5,5 +5,7 @@ metadata:
 data:
   SPRING_PROFILES_ACTIVE: prod
   DB_NAME: groups_db
-  DB_DDL_AUTO: update
-  CATALOG_URL: http://catalog-service
+  DB_DDL_AUTO: validate
+  CATALOG_URL: http://catalog-service/catalog
+  SERVER_SERVLET_CONTEXT_PATH: /groups
+  SERVER_FORWARD_HEADERS_STRATEGY: native

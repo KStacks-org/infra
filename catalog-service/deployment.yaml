@@ -26,13 +26,13 @@ spec:
                 name: catalog-secret
           livenessProbe:
             httpGet:
-              path: /actuator/health/liveness
+              path: /catalog/actuator/health/liveness
               port: 41619
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /catalog/actuator/health/readiness
               port: 41619
             initialDelaySeconds: 10
             periodSeconds: 5

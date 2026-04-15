@@ -26,13 +26,13 @@ spec:
                 name: groups-secret
           livenessProbe:
             httpGet:
-              path: /actuator/health/liveness
+              path: /groups/actuator/health/liveness
               port: 6598
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /groups/actuator/health/readiness
               port: 6598
             initialDelaySeconds: 10
             periodSeconds: 5

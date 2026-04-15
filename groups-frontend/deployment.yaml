@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groups-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: groups-frontend
+  template:
+    metadata:
+      labels:
+        app: groups-frontend
+    spec:
+      containers:
+        - name: groups-frontend
+          image: ghcr.io/kstacks-org/groups-frontend:master-d7539e7
+          ports:
+            - containerPort: 3000
+          # Nitro servers usually respond with 200 on the root path
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5

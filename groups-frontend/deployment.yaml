@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: groups-frontend
-          image: ghcr.io/kstacks-org/groups-frontend:master-8f64d7b
+          image: ghcr.io/kstacks-org/groups-frontend:master-ef2f134
           ports:
             - containerPort: 3000
           # Nitro servers usually respond with 200 on the root path

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: groups
-          image: ghcr.io/kstacks-org/groups-service:master-94a8768
+          image: ghcr.io/kstacks-org/groups-service:master-5b91790
           ports:
             - containerPort: 6598
           envFrom:

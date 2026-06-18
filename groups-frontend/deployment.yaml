@@ -17,6 +17,13 @@ spec:
           image: ghcr.io/kstacks-org/groups-frontend:master-ef2f134
           ports:
             - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
           # Nitro servers usually respond with 200 on the root path
           livenessProbe:
             httpGet:

@@ -17,6 +17,13 @@ spec:
           image: ghcr.io/kstacks-org/groups-service:master-a1f34fe
           ports:
             - containerPort: 6598
+          resources:
+            requests:
+              cpu: 250m
+              memory: 448Mi
+            limits:
+              cpu: 500m
+              memory: 576Mi
           envFrom:
             - configMapRef:
                 name: groups-config

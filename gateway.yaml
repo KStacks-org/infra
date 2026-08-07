@@ -7,6 +7,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   gatewayClassName: eg
+
   listeners:
     - name: https-wildcard
       protocol: HTTPS
@@ -16,6 +17,12 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: kstacks-api-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"
     - name: https-apex
       protocol: HTTPS
       port: 443
@@ -24,17 +31,29 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: kstacks-api-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"
     - name: http-wildcard
       protocol: HTTP
       port: 80
       hostname: "*.kstacks.org"
       allowedRoutes:
         namespaces:
-          from: Same
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"
     - name: http-apex
       protocol: HTTP
       port: 80
       hostname: "kstacks.org"
       allowedRoutes:
         namespaces:
-          from: Same
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"

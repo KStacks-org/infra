@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  gatewayClassName: traefik
+  gatewayClassName: eg
   listeners:
     - name: https-wildcard
       protocol: HTTPS

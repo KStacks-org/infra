@@ -1,0 +1,35 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: edge-security
+  namespace: default
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: kstacks-gateway
+  cors:
+    allowOrigins:
+      - "https://kstacks.org" 
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allowHeaders: ["Content-Type", "Authorization"]
+  jwt:
+    providers:
+      - name: auth-service-provider
+        remoteJWKS:
+          uri: "http://auth-service.default.svc.cluster.local/.well-known/jwks.json"
+        extractFrom:
+          headers:
+            - name: Authorization
+              valuePrefix: "Bearer "
+          cookies:
+            - access_token
+        claimToHeaders:
+          - claim: sub
+            header: X-User-Id
+          - claim: name
+            header: X-User-Name
+          - claim: email
+            header: X-User-Email
+          - claim: gender
+            header: X-User-Gender

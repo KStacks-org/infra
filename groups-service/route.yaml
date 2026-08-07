@@ -13,22 +13,6 @@ spec:
         - path:
             type: PathPrefix
             value: /groups
-      filters:
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: api-cors
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: jwt-auth
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: cookie-to-bearer
       backendRefs:
         - name: groups-service
           port: 80

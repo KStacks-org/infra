@@ -13,12 +13,6 @@ spec:
         - path:
             type: PathPrefix
             value: /catalog
-      filters:
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: api-cors
       backendRefs:
         - name: catalog-service
           port: 80

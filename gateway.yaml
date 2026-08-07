@@ -10,7 +10,7 @@ spec:
   listeners:
     - name: https-wildcard
       protocol: HTTPS
-      port: 8443
+      port: 443
       hostname: "*.kstacks.org"
       tls:
         mode: Terminate
@@ -18,7 +18,7 @@ spec:
           - name: kstacks-api-tls
     - name: https-apex
       protocol: HTTPS
-      port: 8443
+      port: 443
       hostname: "kstacks.org"
       tls:
         mode: Terminate
@@ -26,16 +26,15 @@ spec:
           - name: kstacks-api-tls
     - name: http-wildcard
       protocol: HTTP
-      port: 8000
+      port: 80
       hostname: "*.kstacks.org"
       allowedRoutes:
         namespaces:
           from: Same
     - name: http-apex
       protocol: HTTP
-      port: 8000
+      port: 80
       hostname: "kstacks.org"
       allowedRoutes:
         namespaces:
           from: Same
-          

@@ -17,7 +17,7 @@ spec:
     providers:
       - name: auth-service-provider
         remoteJWKS:
-          uri: "http://auth-service.default.svc.cluster.local/.well-known/jwks.json"
+          uri: "http://auth-service.default.svc.cluster.local/auth/.well-known/jwks.json"
         extractFrom:
           headers:
             - name: Authorization

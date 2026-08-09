@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: portal-frontend
-          image: ghcr.io/kstacks-org/portal-frontend:master-ecf07c7
+          image: ghcr.io/kstacks-org/portal-frontend:master-8f79e3e
           ports:
             - containerPort: 3000
           resources:

@@ -1,18 +1,17 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: groups-route
+  name: auth-route
   namespace: default
 spec:
   parentRefs:
     - name: kstacks-gateway
-  hostnames:
-    - "api.kstacks.org"
   rules:
     - matches:
         - path:
             type: PathPrefix
-            value: /groups
+            value: /auth
       backendRefs:
-        - name: groups-service
+        - name: auth-service
           port: 80
+          

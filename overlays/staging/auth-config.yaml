@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+data:
+  SPRING_PROFILES_ACTIVE: prod
+  APP_OAUTH2_REDIRECT_URI: https://staging.kstacks.org/login-success
+  APP_COOKIE_DOMAIN: staging.kstacks.org
+  JWT_ACCESS_TOKEN_PUBLIC_KEY: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvQ0ghdznSxEnhoBsi6FbtOoDniHJn5rA5Q1ZRYMvwIExEipaYUL5Fu4jH33eFni1Xr7RYumygVfRPNLrccLrsw==
+  JWT_REFRESH_TOKEN_PUBLIC_KEY: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEegl61k1vMMcT81pY74hAGOprD6LjyQsWs+bZ1mcNdzS9NLVmtrzxzvng5lOc4Cv0lVX7kUWA2Q8BbJM4rTIZYQ==

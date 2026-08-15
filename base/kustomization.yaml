@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - auth-service/configmap.yaml
+  - auth-service/deployment.yaml
+  - auth-service/service.yaml
+  - auth-service/route.yaml
+  - catalog-service/configmap.yaml
+  - catalog-service/deployment.yaml
+  - catalog-service/service.yaml
+  - catalog-service/route.yaml
+  - genderize-service/configmap.yaml
+  - genderize-service/deployment.yaml
+  - genderize-service/service.yaml
+  - groups-service/configmap.yaml
+  - groups-service/deployment.yaml
+  - groups-service/service.yaml
+  - groups-service/route.yaml
+  - groups-frontend/deployment.yaml
+  - groups-frontend/service.yaml
+  - groups-frontend/route.yaml
+  - portal-frontend/deployment.yaml
+  - portal-frontend/service.yaml
+  - portal-frontend/route.yaml
+  - policies/jwt-auth.yaml
+  - policies/compression.yaml

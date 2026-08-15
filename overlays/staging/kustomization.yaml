@@ -1,0 +1,62 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+
+resources:
+  - ../../base
+  - gateway.yaml
+  - cors.yaml
+  - postgres.yaml
+  # Uncomment after re-sealing against the Sakhr controller key (STAGING.md #3).
+  # The overlay will not build until these files exist.
+  - sealed-secrets/db-creds.yaml
+  - sealed-secrets/auth-secret.yaml
+  # - sealed-secrets/catalog-secret.yaml
+  # - sealed-secrets/groups-secret.yaml
+  # - sealed-secrets/genderize-secret.yaml
+
+# Tracks the dev-* tag stream. Image Updater bumps these automatically.
+images:
+  - name: ghcr.io/kstacks-org/auth-service
+    newTag: dev-6d76241
+  - name: ghcr.io/kstacks-org/catalog-service
+    newTag: dev-60b8d71
+  - name: ghcr.io/kstacks-org/genderize-service
+    newTag: dev-60b8d71
+  - name: ghcr.io/kstacks-org/groups-service
+    newTag: dev-60b8d71
+  - name: ghcr.io/kstacks-org/groups-frontend
+    newTag: dev-60b8d71
+  - name: ghcr.io/kstacks-org/portal-frontend
+    newTag: dev-60b8d71
+
+patches:
+  - path: auth-config.yaml
+  # JVM services only; the Nuxt frontends are already small.
+  - path: resources.yaml
+    target: {kind: Deployment, name: "(auth|catalog|groups|genderize)-service"}
+  - target: {kind: HTTPRoute, name: auth-route}
+    patch: |
+      - op: add
+        path: /spec/hostnames
+        value: ["api.staging.kstacks.org"]
+  - target: {kind: HTTPRoute, name: catalog-route}
+    patch: |
+      - op: add
+        path: /spec/hostnames
+        value: ["api.staging.kstacks.org"]
+  - target: {kind: HTTPRoute, name: groups-route}
+    patch: |
+      - op: add
+        path: /spec/hostnames
+        value: ["api.staging.kstacks.org"]
+  - target: {kind: HTTPRoute, name: groups-frontend-route}
+    patch: |
+      - op: add
+        path: /spec/hostnames
+        value: ["groups.staging.kstacks.org"]
+  - target: {kind: HTTPRoute, name: portal-route}
+    patch: |
+      - op: add
+        path: /spec/hostnames
+        value: ["staging.kstacks.org"]

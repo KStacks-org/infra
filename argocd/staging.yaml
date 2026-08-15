@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kstacks-staging
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: master
+    argocd-image-updater.argoproj.io/image-list: >-
+      auth=ghcr.io/kstacks-org/auth-service,
+      catalog=ghcr.io/kstacks-org/catalog-service,
+      genderize=ghcr.io/kstacks-org/genderize-service,
+      groups=ghcr.io/kstacks-org/groups-service,
+      groups-fe=ghcr.io/kstacks-org/groups-frontend,
+      portal=ghcr.io/kstacks-org/portal-frontend
+    argocd-image-updater.argoproj.io/auth.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/catalog.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/genderize.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/groups.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/groups-fe.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/portal.allow-tags: regexp:^dev-
+    argocd-image-updater.argoproj.io/update-strategy: newest-build
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/KStacks-org/infra.git
+    targetRevision: master
+    path: overlays/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

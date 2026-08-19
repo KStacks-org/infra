@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: "ghcr.io/kstacks-org/auth-service:prod-6d76241"
+          image: "ghcr.io/kstacks-org/auth-service:prod-4b1a20c"
           ports:
             - containerPort: 1867
           resources:

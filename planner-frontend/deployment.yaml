@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: planner-frontend
-          image: ghcr.io/kstacks-org/planner-frontend:main-d736f8b
+          image: ghcr.io/kstacks-org/planner-frontend:main-2054f04
           ports:
             - containerPort: 3000
           resources:

@@ -28,8 +28,6 @@ spec:
             - configMapRef:
                 name: catalog-config
             - secretRef:
-                name: db-creds
-            - secretRef:
                 name: catalog-secret
           livenessProbe:
             httpGet:

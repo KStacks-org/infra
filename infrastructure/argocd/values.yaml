@@ -1,0 +1,7 @@
+# Values for argocd
+argo-cd:
+  crds:
+    install: true
+  server:
+    extraArgs:
+      - --insecure

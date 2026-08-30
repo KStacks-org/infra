@@ -1,0 +1,4 @@
+# Default values for bootstrap
+project: default
+repoURL: https://github.com/kstacks-org/infra.git
+targetRevision: HEAD

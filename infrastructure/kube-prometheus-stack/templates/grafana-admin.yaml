@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: grafana-admin
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  encryptedData:
+    admin-password: AgB6ATK8WitSvkNx24J5j5bW/Fu+H7QpQT1wbDeCm/nRkaYrF++ZujVZ/FZL+hIijY5e23O2pX1L4UErF80V5o1G1zmacofOdOGNjksaFVfHi8zqS640Ua6K2AMiWH4u62edSDrS9kShWRrIybrTkFIVmzqJq+RX0A5SZsfoW/4ujD/o3qiW/4Hm+eyshOBTkqKHlP+ZuJDKwspVf47CIwXVqHKeG/+7rnPCOjoZP0zZpZsBrItWSJKi+xMlYjBwVBJaEbuo8z+F7v1V3YsUeGincY3mxi20DW9RlMt7AMZiL33OjykiNtM33TejWvdOzwCHGG8q7pG0t4EbXF3fTdjiINsFzNZbrGquGXr0Hfvb37ARNH0KyntfU2VJOZFJ01Ll/rSKWoAEYvTTQ/BWADrod+qRwKHqc9ivXcQ/0l0bAsvYz7QWyq6u4kJ4XCcN7e4Iq5C6GWPSZ2L9aFYWrXbVhoyj7ch1K3Kp4e/e63Mme0v11coSqMfqQNIcYXFcTQ8aC9PNYbBnhLkh+fJUnZLvHRhXYY0yvFSEj45ocf/td/LgbE2FZpcr5kEd7golriodG4G4OQMS6q/fN6N4nUAMTfy1HB+Aj0sFnFcQyacxfRFUQ9B41wGyoGz7IEjujQ/QiHEItvneoG9/gwthX++gZwRDjkI4m+2Gp9e/XjkuApRvRIaB3W/8FdEtM3G6O/KunxSXBp0WAoep5Pc5Qin9rP1d3p6D3apRzs3WgyH7HkRSB3Jkww80BuUccPoxHPQ=
+    admin-user: AgBQH39pilKqUjc70iRKzom+VlT5tC+mMsXFs7NlxcILHWXUhDMsYfa52Y4Gb/sM6RvT3/rFG8o7lfIz+H9tcc/BUUvw2mSH1oFJG4pRrpfEFAyaj/cS0Y3YmNUmK4rGDdfzazOjtI08BeTi2OVCr1JpODBicLlBqhPR91jAox85UY2BMQW1LGgli2BA+8kw7whWFJEsnwTcY7Rjse+a8AxDbT6jqXiOq1CgQf26vfxf3g1+cqnRx0onPxn8zaXeKWB/Dn3hi2JCme4KDXiC2u7u2usrIOjIS9yl+CBzQLxbmn2+kBKKkEem2r5+DhLBzzVO3EzjV1n9DdAZUwNti38Kvb0BxRzxNhkHiOt8lW5yWVR/OKQPFlJQKuL5o231U/w2Xb9Uy97HMf2tSFbbphdc38EdNfzk2OOSPm12i1F/XfbljGF1Mj0uGpILaepyq148U7+w/fR64aPwRzv4rAbcviH9MiENCYzZ5fFN6dCK39LT6s2y4Er4GMirj1etAceRvL21T1Z71rV3u2Jb4GkyjW6JUnhTlJpIPweREAdSYIw3MvFFlUCCX0wxSHARd+8ZaZQ7A/0BvnsPdzDn0y/F1kQvjilz+x73bmnhgZtiBUtQl2dmx4TuTSqpmg6O3UfrYPNrugHpFedFVztWgySA5GbNvUc5qOWez6542O7JL5hTur13wsfeGZjII4ZjJ0Wa+QrsXA==
+  template:
+    metadata:
+      name: grafana-admin
+      namespace: monitoring

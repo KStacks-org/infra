@@ -2,7 +2,9 @@
 gateway:
   deployment:
     replicas: 1
-
+  crds:
+    enabled: false
+    
 gateway-crds-helm:
   crds:
     gatewayAPI:

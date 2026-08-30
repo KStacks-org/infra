@@ -21,3 +21,14 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      jqPathExpressions:
+        - '.spec.listeners[]?.tls?.certificateRefs[]?.group'
+        - '.spec.listeners[]?.tls?.certificateRefs[]?.kind'
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      jqPathExpressions:
+        - '.spec.jwt?.providers[]?.remoteJWKS?.cacheDuration'

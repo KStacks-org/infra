@@ -37,9 +37,11 @@ spec:
               port: 6598
             initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /groups/actuator/health/readiness
               port: 6598
             initialDelaySeconds: 10
             periodSeconds: 5
+            timeoutSeconds: 3

@@ -37,9 +37,11 @@ spec:
               port: 64843
             initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /health/readiness
               port: 64843
             initialDelaySeconds: 10
             periodSeconds: 5
+            timeoutSeconds: 3

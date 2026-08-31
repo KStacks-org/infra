@@ -15,7 +15,7 @@ spec:
     path: infrastructure/redis
   destination:
     server: https://kubernetes.default.svc
-    namespace: envoy-gateway-system
+    namespace: redis
   syncPolicy:
     automated:
       prune: true

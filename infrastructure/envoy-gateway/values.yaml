@@ -10,7 +10,7 @@ gateway:
         backend:
           type: Redis
           redis:
-            url: redis-master.envoy-gateway-system.svc.cluster.local:6379
+            url: redis-master.redis.svc.cluster.local:6379
         failClosed: false
 
 gateway-crds-helm:

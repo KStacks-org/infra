@@ -32,3 +32,8 @@ spec:
       kind: SecurityPolicy
       jqPathExpressions:
         - '.spec.jwt?.providers[]?.remoteJWKS?.cacheDuration'
+    - group: gateway.envoyproxy.io
+      kind: BackendTrafficPolicy
+      jqPathExpressions:
+        - '.spec.rateLimit?.global?.rules[]?.clientSelectors[]?.sourceCIDR?.invert'
+        - '.spec.rateLimit?.global?.rules[]?.clientSelectors[]?.headers[]?.invert'

@@ -4,7 +4,15 @@ gateway:
     replicas: 1
   crds:
     enabled: false
-    
+  config:
+    envoyGateway:
+      rateLimit:
+        backend:
+          type: Redis
+          redis:
+            url: redis-master.envoy-gateway-system.svc.cluster.local:6379
+        failClosed: false
+
 gateway-crds-helm:
   crds:
     gatewayAPI:

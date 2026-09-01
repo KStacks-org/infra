@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: groups-frontend
-          image: ghcr.io/kstacks-org/groups-frontend:master-d5e2768
+          image: ghcr.io/kstacks-org/groups-frontend:master-d5fed03
           ports:
             - containerPort: 3000
           resources:

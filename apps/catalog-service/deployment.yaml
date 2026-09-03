@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: catalog
-          image: ghcr.io/kstacks-org/catalog-service:prod-e796159
+          image: ghcr.io/kstacks-org/catalog-service:prod-5ab7294
           ports:
             - containerPort: 41619
           resources:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: genderize
-          image: ghcr.io/kstacks-org/genderize-service:production-1d63a82
+          image: ghcr.io/kstacks-org/genderize-service:production-79ac45a
           ports:
             - containerPort: 64843
           resources:

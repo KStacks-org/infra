@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: index-frontend
-          image: ghcr.io/kstacks-org/index-frontend:main-23bd369
+          image: ghcr.io/kstacks-org/index-frontend:main-2b54609
           ports:
             - containerPort: 3000
           resources:

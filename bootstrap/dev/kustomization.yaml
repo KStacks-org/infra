@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+- namespace.yaml
+- auth-service-dev.yaml
+- catalog-service-dev.yaml
+- genderize-service-dev.yaml
+- groups-frontend-dev.yaml
+- groups-service-dev.yaml
+- index-frontend-dev.yaml
+- planner-frontend-dev.yaml
+- portal-frontend-dev.yaml
+patches:
+- path: envoy-gateway.yaml

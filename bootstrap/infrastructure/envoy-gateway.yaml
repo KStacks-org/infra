@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoy-gateway
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: envoy-gateway-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+    - RespectIgnoreDifferences=true
+  ignoreDifferences:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    jqPathExpressions:
+    - .spec.listeners[]?.tls?.certificateRefs[]?.group
+    - .spec.listeners[]?.tls?.certificateRefs[]?.kind
+  - group: gateway.envoyproxy.io
+    kind: SecurityPolicy
+    jqPathExpressions:
+    - .spec.jwt?.providers[]?.remoteJWKS?.cacheDuration
+  - group: gateway.envoyproxy.io
+    kind: BackendTrafficPolicy
+    jqPathExpressions:
+    - .spec.rateLimit?.global?.rules[]?.clientSelectors[]?.sourceCIDR?.invert
+    - .spec.rateLimit?.global?.rules[]?.clientSelectors[]?.headers[]?.invert
+  sources:
+  - repoURL: https://github.com/kstacks-org/infra.git
+    targetRevision: master
+    path: infrastructure/envoy-gateway/chart
+  - repoURL: https://github.com/kstacks-org/infra.git
+    targetRevision: master
+    path: infrastructure/envoy-gateway/overlays/prod

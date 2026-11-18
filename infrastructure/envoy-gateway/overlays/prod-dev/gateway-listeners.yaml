@@ -1,0 +1,60 @@
+- op: add
+  path: /spec/listeners/-
+  value:
+    name: https-dev-apex
+    protocol: HTTPS
+    port: 443
+    hostname: dev.kstacks.org
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: kstacks-dev-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: 'true'
+- op: add
+  path: /spec/listeners/-
+  value:
+    name: http-dev-apex
+    protocol: HTTP
+    port: 80
+    hostname: dev.kstacks.org
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: 'true'
+- op: add
+  path: /spec/listeners/-
+  value:
+    name: https-dev-wildcard
+    protocol: HTTPS
+    port: 443
+    hostname: '*.dev.kstacks.org'
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: kstacks-dev-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: 'true'
+- op: add
+  path: /spec/listeners/-
+  value:
+    name: http-dev-wildcard
+    protocol: HTTP
+    port: 80
+    hostname: '*.dev.kstacks.org'
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: 'true'

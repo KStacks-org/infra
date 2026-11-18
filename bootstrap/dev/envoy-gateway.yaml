@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoy-gateway
+  namespace: argocd
+spec:
+  sources:
+  - repoURL: https://github.com/kstacks-org/infra.git
+    targetRevision: master
+    path: infrastructure/envoy-gateway/chart
+  - repoURL: https://github.com/kstacks-org/infra.git
+    targetRevision: master
+    path: infrastructure/envoy-gateway/overlays/prod-dev

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: genderize-config
-data:
-  DB_NAME: genderize_db
-  LOAD_CSV: "false"
-  DB_ENGINE: postgresql
-

@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- policies/kstacks-gateway-traffic.yaml
+- policies/groups-rate-limit.yaml
+- policies/auth-rate-limit.yaml
+- policies/client-ip-detection.yaml
+- gateway.yaml
+- policies/cors.yaml
+- policies/jwt-auth.yaml

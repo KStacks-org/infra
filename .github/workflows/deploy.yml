@@ -1,0 +1,61 @@
+name: Update Kustomize images
+
+on:
+  workflow_call:
+    inputs:
+      app:
+        description: Active app overlay in infra.
+        type: string
+        required: true
+      image-tag:
+        type: string
+        required: true
+      image-digest:
+        type: string
+        required: true
+    secrets:
+      INFRA_PAT:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/prod')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout infra
+        uses: actions/checkout@v4
+        with:
+          repository: KStacks-org/infra
+          ref: master
+          token: ${{ secrets.INFRA_PAT }}
+          path: infra
+
+      - name: Update environment image
+        working-directory: infra
+        env:
+          APP: ${{ inputs.app }}
+          DEPLOY_ENV: ${{ github.ref_name }}
+          IMAGE_TAG: ${{ inputs.image-tag }}
+          IMAGE_DIGEST: ${{ inputs.image-digest }}
+        run: |
+          file="apps/$APP/overlays/$DEPLOY_ENV/kustomization.yaml"
+          test -f "$file" || { echo "Merge the infra Kustomize migration first." >&2; exit 1; }
+          [[ "$IMAGE_DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]
+          yq -i '.images[0].newTag = strenv(IMAGE_TAG) | .images[0].digest = strenv(IMAGE_DIGEST)' "$file"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$file"
+          git diff --cached --quiet && exit 0
+          git commit -m "chore($APP): deploy $IMAGE_TAG to $DEPLOY_ENV"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin master
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Failed to update infra after five attempts." >&2
+          exit 1

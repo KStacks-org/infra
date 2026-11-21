@@ -1,0 +1,5 @@
+apiVersion: v2
+name: groups-frontend
+description: groups-frontend application
+type: application
+version: 0.1.0

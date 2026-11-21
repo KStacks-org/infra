@@ -1,0 +1,14 @@
+{{- range $environment, $settings := .Values.environments }}
+{{- if and $settings.enabled (ne $settings.namespace "default") }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $settings.namespace }}
+  labels:
+    gateway-access: "true"
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+{{- end }}
+{{- end }}

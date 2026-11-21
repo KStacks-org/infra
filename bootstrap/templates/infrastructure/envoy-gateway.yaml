@@ -11,6 +11,10 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     path: infrastructure/envoy-gateway
+    helm:
+      valuesObject:
+        environments:
+          {{- toYaml .Values.environments | nindent 10 }}
   destination:
     server: https://kubernetes.default.svc
     namespace: envoy-gateway-system

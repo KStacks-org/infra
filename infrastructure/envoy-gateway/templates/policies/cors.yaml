@@ -15,3 +15,26 @@ spec:
     allowCredentials: true
     allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
     allowHeaders: ["Content-Type", "Authorization"]
+{{- if .Values.environments.dev.enabled }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: cors
+  namespace: {{ .Values.environments.dev.namespace }}
+spec:
+  mergeType: StrategicMerge
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: auth-route
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: catalog-route
+  cors:
+    allowOrigins:
+      {{- toYaml .Values.devCorsOrigins | nindent 6 }}
+    allowCredentials: true
+    allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+    allowHeaders: ["Content-Type", "Authorization"]
+{{- end }}

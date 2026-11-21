@@ -1,0 +1,7 @@
+image:
+  tag: master-5f4bc4c
+route:
+  hostname: api.kstacks.org
+config:
+  DB_NAME: groups_db
+sealedSecretFile: files/prod/sealed-secret.yaml

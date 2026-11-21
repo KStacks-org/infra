@@ -1,0 +1,4 @@
+image:
+  tag: master-901225f
+route:
+  hostname: groups.kstacks.org

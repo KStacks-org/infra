@@ -1,0 +1,5 @@
+apiVersion: v2
+name: planner-frontend
+description: planner-frontend application
+type: application
+version: 0.1.0

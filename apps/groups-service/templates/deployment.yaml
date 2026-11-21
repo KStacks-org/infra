@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groups-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: groups
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: groups
+    spec:
+      containers:
+        - name: groups
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 6598
+          resources:
+            requests:
+              cpu: 250m
+              memory: 448Mi
+            limits:
+              cpu: 1500m
+              memory: 576Mi
+          envFrom:
+            - configMapRef:
+                name: groups-config
+            - secretRef:
+                name: db-creds
+            - secretRef:
+                name: groups-secret
+          livenessProbe:
+            httpGet:
+              path: /groups/actuator/health/liveness
+              port: 6598
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /groups/actuator/health/readiness
+              port: 6598
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3

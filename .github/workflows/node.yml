@@ -1,0 +1,25 @@
+name: Build Node frontend images
+
+on:
+  workflow_call:
+    outputs:
+      image-tag:
+        description: Image tag for the caller's dev/prod branch.
+        value: ${{ github.ref_name == 'dev' && jobs.dev.outputs.image-tag || jobs.prod.outputs.image-tag }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  dev:
+    uses: ./.github/workflows/docker.yml
+    with:
+      variant: dev
+      build-args: BUILD_MODE=dev
+
+  prod:
+    uses: ./.github/workflows/docker.yml
+    with:
+      variant: prod
+      build-args: BUILD_MODE=prod

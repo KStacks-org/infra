@@ -1,0 +1,36 @@
+{{- range $environment, $settings := .Values.environments }}
+{{- if $settings.enabled }}
+{{- range $.Values.apps }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  {{- if eq $environment "prod" }}
+  name: {{ . }}
+  {{- else }}
+  name: {{ . }}-{{ $environment }}
+  {{- end }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $.Values.project }}
+  source:
+    repoURL: {{ $.Values.repoURL }}
+    targetRevision: {{ $.Values.targetRevision }}
+    path: apps/{{ . }}
+    helm:
+      valueFiles:
+        - values-{{ $environment }}.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $settings.namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
+{{- end }}
+{{- end }}

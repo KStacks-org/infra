@@ -1,9 +1,12 @@
-# Per-User Rate limitng
+{{- range $environment, $settings := .Values.environments }}
+{{- if $settings.enabled }}
+---
+# Per-user rate limiting
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
   name: groups-rate-limit
-  namespace: default
+  namespace: {{ $settings.namespace }}
 spec:
   mergeType: StrategicMerge
   targetRefs:
@@ -22,12 +25,12 @@ spec:
             requests: 300
             unit: Minute
 ---
-# Per-IP Rate limiting
+# Per-IP rate limiting
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
   name: auth-rate-limit
-  namespace: default
+  namespace: {{ $settings.namespace }}
 spec:
   mergeType: StrategicMerge
   targetRefs:
@@ -45,3 +48,5 @@ spec:
           limit:
             requests: 20
             unit: Minute
+{{- end }}
+{{- end }}

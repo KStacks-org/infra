@@ -1,0 +1,6 @@
+image:
+  tag: master-5f4bc4c
+route:
+  hostname: dev-api.kstacks.org
+config:
+  DB_NAME: groups_db_dev

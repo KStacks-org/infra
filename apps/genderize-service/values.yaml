@@ -1,0 +1,8 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/kstacks-org/genderize-service
+  tag: ''
+config:
+  LOAD_CSV: 'false'
+  DB_ENGINE: postgresql
+sealedSecretFile: ''

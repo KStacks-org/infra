@@ -1,0 +1,4 @@
+image:
+  tag: main-2b54609
+route:
+  hostname: index.dev.kstacks.org

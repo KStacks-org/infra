@@ -1,4 +1,17 @@
 # Values for envoy-gateway
+# Bootstrap supplies the enabled environments to this chart.
+environments:
+  prod:
+    enabled: true
+    namespace: default
+  dev:
+    enabled: false
+    namespace: dev
+
+devCorsOrigins:
+  - https://dev.kstacks.org
+  - https://groups.dev.kstacks.org
+
 gateway:
   deployment:
     replicas: 1

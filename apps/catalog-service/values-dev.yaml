@@ -1,0 +1,6 @@
+image:
+  tag: prod-6248d60
+route:
+  hostname: api.dev.kstacks.org
+config:
+  DB_NAME: catalog_dev

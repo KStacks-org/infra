@@ -1,0 +1,11 @@
+image:
+  tag: prod-e2d3bba
+route:
+  hostname: api.dev.kstacks.org
+config:
+  DB_NAME: auth_db_dev
+  JWT_ISSUER: kstack-dev
+  APP_OAUTH2_REDIRECT_URI: https://dev.kstacks.org/login-success
+  APP_COOKIE_DOMAIN: dev.kstacks.org
+  APP_COOKIE_ACCESS_TOKEN_NAME: dev_access_token
+  APP_COOKIE_REFRESH_TOKEN_NAME: dev_refresh_token

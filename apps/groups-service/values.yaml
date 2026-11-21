@@ -1,0 +1,16 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/kstacks-org/groups-service
+  tag: ''
+route:
+  gateway:
+    name: kstacks-gateway
+    namespace: default
+  hostname: ''
+config:
+  SPRING_PROFILES_ACTIVE: prod
+  DB_DDL_AUTO: validate
+  CATALOG_URL: http://catalog-service/catalog
+  SERVER_SERVLET_CONTEXT_PATH: /groups
+  SERVER_FORWARD_HEADERS_STRATEGY: native
+sealedSecretFile: ''

@@ -1,0 +1,31 @@
+{{- if .Values.projectId }}
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalConnection
+metadata:
+  name: kstacks
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  address: {{ .Values.address | quote }}
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: kstacks
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  infisicalConnectionRef:
+    name: kstacks
+    namespace: {{ $.Release.Namespace }}
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-auth
+      namespace: {{ $.Release.Namespace }}
+      key: clientId
+    clientSecretRef:
+      name: infisical-auth
+      namespace: {{ $.Release.Namespace }}
+      key: clientSecret
+{{- end }}

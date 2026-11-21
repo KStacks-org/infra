@@ -5,4 +5,3 @@ image:
 config:
   LOAD_CSV: 'false'
   DB_ENGINE: postgresql
-sealedSecretFile: ''

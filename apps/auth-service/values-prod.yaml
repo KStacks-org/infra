@@ -9,4 +9,3 @@ config:
   JWT_ISSUER: kstack
   APP_OAUTH2_REDIRECT_URI: https://kstacks.org/login-success
   APP_COOKIE_DOMAIN: kstacks.org
-sealedSecretFile: files/prod/sealed-secret.yaml

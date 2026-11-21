@@ -4,4 +4,3 @@ route:
   hostname: api.kstacks.org
 config:
   DB_NAME: groups_db
-sealedSecretFile: files/prod/sealed-secret.yaml

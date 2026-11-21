@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalog-service
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -30,7 +32,7 @@ spec:
             - configMapRef:
                 name: catalog-config
             - secretRef:
-                name: catalog-secret
+                name: catalog-secret-infisical
           livenessProbe:
             httpGet:
               path: /catalog/actuator/health/liveness

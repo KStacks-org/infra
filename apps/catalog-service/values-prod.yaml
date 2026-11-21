@@ -4,4 +4,3 @@ route:
   hostname: api.kstacks.org
 config:
   DB_NAME: catalog
-sealedSecretFile: files/prod/sealed-secret.yaml

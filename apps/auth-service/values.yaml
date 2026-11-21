@@ -16,4 +16,3 @@ config:
   GENDERIZE_SERVICE_URL: http://genderize-service
   JWT_ACCESS_TOKEN_EXPIRATION: '300000'
   JWT_REFRESH_TOKEN_EXPIRATION: '604800000'
-sealedSecretFile: ''

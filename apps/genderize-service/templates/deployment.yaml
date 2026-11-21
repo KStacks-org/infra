@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: genderize-service
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -30,9 +32,9 @@ spec:
             - configMapRef:
                 name: genderize-config
             - secretRef:
-                name: db-creds
+                name: db-creds-infisical
             - secretRef:
-                name: genderize-secret
+                name: genderize-secret-infisical
           livenessProbe:
             httpGet:
               path: /health/liveness

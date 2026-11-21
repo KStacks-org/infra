@@ -1,0 +1,13 @@
+address: https://eu.infisical.com/api
+projectId: "e61e037d-06f6-4684-b324-643c1bda254e"
+environments: {}
+
+targets:
+  - name: auth-secret
+  - name: catalog-secret
+  - name: db-creds
+  - name: genderize-secret
+  - name: groups-secret
+  - name: grafana-admin
+    environment: prod
+    namespace: monitoring

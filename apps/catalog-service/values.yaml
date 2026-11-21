@@ -13,4 +13,3 @@ config:
   DB_DDL_AUTO: validate
   SERVER_SERVLET_CONTEXT_PATH: /catalog
   SERVER_FORWARD_HEADERS_STRATEGY: native
-sealedSecretFile: ''

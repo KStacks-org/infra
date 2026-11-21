@@ -13,4 +13,3 @@ config:
   CATALOG_URL: http://catalog-service/catalog
   SERVER_SERVLET_CONTEXT_PATH: /groups
   SERVER_FORWARD_HEADERS_STRATEGY: native
-sealedSecretFile: ''

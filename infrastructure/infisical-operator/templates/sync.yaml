@@ -1,0 +1,30 @@
+{{- range $environment, $settings := .Values.environments }}
+{{- if and $.Values.projectId $settings.enabled }}
+{{- range $target := $.Values.targets }}
+{{- if eq (default $environment $target.environment) $environment }}
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
+metadata:
+  name: {{ $environment }}-{{ $target.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  infisicalAuthRef:
+    name: kstacks
+    namespace: {{ $.Release.Namespace }}
+  syncOptions:
+    refreshInterval: 1m
+  sources:
+    - projectId: {{ $.Values.projectId | quote }}
+      environmentSlug: {{ $environment | quote }}
+      secretPath: /{{ $target.name }}
+  targets:
+    - name: {{ $target.name }}-infisical
+      namespace: {{ default $settings.namespace $target.namespace }}
+      kind: Secret
+      creationPolicy: Orphan
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

@@ -5,7 +5,6 @@ targetRevision: master
 environments:
   prod:
     enabled: true
-    # Preserve the existing workloads and namespace-bound SealedSecrets.
     namespace: default
   dev:
     # Enable after dev secrets, frontend images, DNS, and TLS are ready.

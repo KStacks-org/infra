@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth-service
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -30,9 +32,9 @@ spec:
             - configMapRef:
                 name: auth-config
             - secretRef:
-                name: db-creds
+                name: db-creds-infisical
             - secretRef:
-                name: auth-secret
+                name: auth-secret-infisical
           livenessProbe:
             httpGet:
               path: /auth/actuator/health/liveness

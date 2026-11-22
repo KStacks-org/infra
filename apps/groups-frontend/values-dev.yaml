@@ -1,4 +1,4 @@
 image:
-  tag: master-901225f
+  tag: dev-e2e4483
 route:
   hostname: dev-groups.kstacks.org

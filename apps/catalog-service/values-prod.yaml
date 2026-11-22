@@ -1,5 +1,5 @@
 image:
-  tag: prod-6248d60
+  tag: sha-cb7886f
 route:
   hostname: api.kstacks.org
 config:

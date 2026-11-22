@@ -1,4 +1,22 @@
-# Default values for bootstrap
 project: default
 repoURL: https://github.com/kstacks-org/infra.git
-targetRevision: HEAD
+targetRevision: master
+
+environments:
+  prod:
+    enabled: true
+    namespace: default
+  dev:
+    # Enable after dev secrets, frontend images, DNS, and TLS are ready.
+    enabled: false
+    namespace: dev
+
+apps:
+  - auth-service
+  - catalog-service
+  - genderize-service
+  - groups-frontend
+  - groups-service
+  - index-frontend
+  - planner-frontend
+  - portal-frontend

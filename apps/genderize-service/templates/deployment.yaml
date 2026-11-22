@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genderize-service
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: genderize
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: genderize
+    spec:
+      containers:
+        - name: genderize
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 64843
+          resources:
+            requests:
+              cpu: 100m
+              memory: 320Mi
+            limits:
+              cpu: 300m
+              memory: 384Mi
+          envFrom:
+            - configMapRef:
+                name: genderize-config
+            - secretRef:
+                name: db-creds-infisical
+            - secretRef:
+                name: genderize-secret-infisical
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: 64843
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: 64843
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3

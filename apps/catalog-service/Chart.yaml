@@ -1,0 +1,5 @@
+apiVersion: v2
+name: catalog-service
+description: catalog-service application
+type: application
+version: 0.1.0

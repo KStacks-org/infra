@@ -1,0 +1,61 @@
+name: Build Java service image
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        description: Dockerfile builds natively; Dockerfile.ci consumes a Maven JAR.
+        type: string
+        default: Dockerfile
+      github-packages:
+        description: Native build requires authenticated Maven dependencies.
+        type: boolean
+        default: false
+    outputs:
+      image-tag:
+        description: Published service image tag.
+        value: ${{ jobs.image.outputs.image-tag }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  jar:
+    if: inputs.dockerfile == 'Dockerfile.ci'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+      - name: Package JAR
+        run: sh ./mvnw --batch-mode clean package -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-jar
+          path: target/*-SNAPSHOT.jar
+          if-no-files-found: error
+          retention-days: 1
+
+  image:
+    needs: jar
+    if: ${{ !cancelled() && (needs.jar.result == 'success' || needs.jar.result == 'skipped') }}
+    uses: ./.github/workflows/docker.yml
+    with:
+      dockerfile: ${{ inputs.dockerfile }}
+      artifact-name: ${{ inputs.dockerfile == 'Dockerfile.ci' && 'java-jar' || '' }}
+      artifact-path: target
+      build-args: ${{ inputs.github-packages && format('GITHUB_USERNAME={0}', github.actor) || '' }}
+    secrets:
+      build-secrets: ${{ inputs.github-packages && format('github_token={0}', secrets.GITHUB_TOKEN) || '' }}

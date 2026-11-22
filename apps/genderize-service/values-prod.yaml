@@ -1,0 +1,4 @@
+image:
+  tag: production-cea6247
+config:
+  DB_NAME: genderize_db

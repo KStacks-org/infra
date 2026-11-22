@@ -1,0 +1,16 @@
+name: Build Python service image
+
+on:
+  workflow_call:
+    outputs:
+      image-tag:
+        description: Published service image tag.
+        value: ${{ jobs.image.outputs.image-tag }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  image:
+    uses: ./.github/workflows/docker.yml

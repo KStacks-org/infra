@@ -1,8 +1,11 @@
+{{- range $environment, $settings := .Values.environments }}
+{{- if $settings.enabled }}
+---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
   name: jwt-auth
-  namespace: default
+  namespace: {{ $settings.namespace }}
 spec:
   mergeType: StrategicMerge
   targetRefs:
@@ -13,13 +16,17 @@ spec:
     providers:
       - name: auth-service-provider
         remoteJWKS:
-          uri: "http://auth-service.default.svc.cluster.local/auth/.well-known/jwks.json"
+          uri: "http://auth-service.{{ $settings.namespace }}.svc.cluster.local/auth/.well-known/jwks.json"
         extractFrom:
           headers:
             - name: Authorization
               valuePrefix: "Bearer "
           cookies:
+            {{- if eq $environment "dev" }}
+            - dev_access_token
+            {{- else }}
             - access_token
+            {{- end }}
         claimToHeaders:
           - claim: sub
             header: X-User-Id
@@ -29,3 +36,13 @@ spec:
             header: X-User-Email
           - claim: gender
             header: X-User-Gender
+  {{- if eq $environment "dev" }}
+  cors:
+    allowOrigins:
+      {{- toYaml $.Values.devCorsOrigins | nindent 6 }}
+    allowCredentials: true
+    allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+    allowHeaders: ["Content-Type", "Authorization"]
+  {{- end }}
+{{- end }}
+{{- end }}

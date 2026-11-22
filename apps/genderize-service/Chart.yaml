@@ -1,0 +1,5 @@
+apiVersion: v2
+name: genderize-service
+description: genderize-service application
+type: application
+version: 0.1.0

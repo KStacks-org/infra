@@ -1,0 +1,51 @@
+name: Update Helm image values
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        type: string
+        required: true
+    secrets:
+      INFRA_PAT:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/prod')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout infra
+        uses: actions/checkout@v4
+        with:
+          repository: KStacks-org/infra
+          ref: master
+          token: ${{ secrets.INFRA_PAT }}
+
+      - name: Update environment image
+        env:
+          APP: ${{ github.event.repository.name }}
+          DEPLOY_ENV: ${{ github.ref_name }}
+          IMAGE_TAG: ${{ inputs.image-tag }}
+        run: |
+          file="apps/$APP/values-$DEPLOY_ENV.yaml"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin master
+            git switch --detach FETCH_HEAD
+            test -f "$file" || { echo "Missing environment values: $file" >&2; exit 1; }
+            yq -i '.image.tag = strenv(IMAGE_TAG)' "$file"
+            git add "$file"
+            git diff --cached --quiet && exit 0
+            git commit -m "chore($APP): deploy $IMAGE_TAG to $DEPLOY_ENV"
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Failed to update infra after five attempts." >&2
+          exit 1

@@ -1,0 +1,15 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/kstacks-org/catalog-service
+  tag: ''
+route:
+  gateway:
+    name: kstacks-gateway
+    namespace: default
+  hostname: ''
+config:
+  SPRING_PROFILES_ACTIVE: prod
+  LOAD_DATA: 'false'
+  DB_DDL_AUTO: validate
+  SERVER_SERVLET_CONTEXT_PATH: /catalog
+  SERVER_FORWARD_HEADERS_STRATEGY: native

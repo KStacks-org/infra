@@ -20,9 +20,13 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
-          selector:
+          selector: &prodNamespaces
             matchLabels:
               gateway-access: "true"
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: NotIn
+                values: [{{ .Values.environments.dev.namespace | quote }}]
     - name: https-apex
       protocol: HTTPS
       port: 443
@@ -34,9 +38,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
-          selector:
-            matchLabels:
-              gateway-access: "true"
+          selector: *prodNamespaces
     - name: http-wildcard
       protocol: HTTP
       port: 80
@@ -44,9 +46,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
-          selector:
-            matchLabels:
-              gateway-access: "true"
+          selector: *prodNamespaces
     - name: http-apex
       protocol: HTTP
       port: 80
@@ -54,6 +54,32 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
+          selector: *prodNamespaces
+    {{- if .Values.environments.dev.enabled }}
+    {{- range $host := list "dev" "dev-api" "dev-groups" "dev-index" "dev-planner" }}
+    - name: https-{{ $host }}
+      protocol: HTTPS
+      port: 443
+      hostname: "{{ $host }}.kstacks.org"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: kstacks-api-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
           selector:
             matchLabels:
-              gateway-access: "true"
+              kubernetes.io/metadata.name: {{ $.Values.environments.dev.namespace | quote }}
+    - name: http-{{ $host }}
+      protocol: HTTP
+      port: 80
+      hostname: "{{ $host }}.kstacks.org"
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Values.environments.dev.namespace | quote }}
+    {{- end }}
+    {{- end }}

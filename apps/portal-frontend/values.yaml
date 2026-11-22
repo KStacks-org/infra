@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/kstacks-org/portal-frontend
+  tag: ''
+route:
+  gateway:
+    name: kstacks-gateway
+    namespace: default
+  hostname: ''

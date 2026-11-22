@@ -1,5 +1,5 @@
 image:
-  tag: master-5f4bc4c
+  tag: sha-5fd1b35
 route:
   hostname: api.kstacks.org
 config:

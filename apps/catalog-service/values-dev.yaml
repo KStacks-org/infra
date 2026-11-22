@@ -1,5 +1,5 @@
 image:
-  tag: dev-7cd5142
+  tag: dev-58e508d
 route:
   hostname: dev-api.kstacks.org
 config:

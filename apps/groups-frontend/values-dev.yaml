@@ -1,4 +1,4 @@
 image:
-  tag: dev-e2e4483
+  tag: dev-05d7b60
 route:
   hostname: dev-groups.kstacks.org

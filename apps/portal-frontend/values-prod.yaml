@@ -1,4 +1,4 @@
 image:
-  tag: master-a866189
+  tag: prod-f1caef3
 route:
   hostname: kstacks.org

@@ -1,4 +1,4 @@
 image:
-  tag: main-5d723fb
+  tag: dev-f7131ab
 route:
   hostname: dev-planner.kstacks.org

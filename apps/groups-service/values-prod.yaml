@@ -1,5 +1,5 @@
 image:
-  tag: prod-1ed1f24
+  tag: prod-71462fb
 route:
   hostname: api.kstacks.org
 config:

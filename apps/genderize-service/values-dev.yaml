@@ -1,4 +1,4 @@
 image:
-  tag: dev-e0bc989
+  tag: dev-5b3f94e
 config:
   DB_NAME: genderize_db_dev

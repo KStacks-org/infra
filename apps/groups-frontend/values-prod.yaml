@@ -1,4 +1,4 @@
 image:
-  tag: master-901225f
+  tag: prod-05d7b60
 route:
   hostname: groups.kstacks.org

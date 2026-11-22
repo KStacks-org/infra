@@ -1,4 +1,4 @@
 image:
-  tag: sha-a118d96
+  tag: prod-5b3f94e
 config:
   DB_NAME: genderize_db

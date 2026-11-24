@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: cnpg-cluster
+  labels:
+    release: {{ .Release.Name | quote }}
+spec:
+  namespaceSelector:
+    matchNames: [default]
+  selector:
+    matchLabels:
+      cnpg.io/cluster: cnpg-cluster
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 60s

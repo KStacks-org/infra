@@ -20,7 +20,8 @@ spec:
         - name: auth
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 1867
+            - name: http
+              containerPort: 1867
           resources:
             requests:
               cpu: 250m

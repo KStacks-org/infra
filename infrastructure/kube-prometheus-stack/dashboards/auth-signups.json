@@ -1,0 +1,113 @@
+{
+  "uid": "auth-signups",
+  "title": "User Accounts",
+  "tags": [
+    "auth"
+  ],
+  "schemaVersion": 39,
+  "timezone": "browser",
+  "refresh": "1m",
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Signups in selected time range",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 10
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Accounts created since signup monitoring was enabled, within the selected time range.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(auth_account_events_total{job=\"monitoring/auth-service\",namespace=\"default\",event=\"signup\"}[$__range]))",
+          "legendFormat": "Signups",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Gender breakdown from account events",
+      "type": "piechart",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 16,
+        "h": 10
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (gender) (increase(auth_account_events_total{job=\"monitoring/auth-service\",namespace=\"default\",gender=~\"MALE|FEMALE\"}[$__range])) > 0",
+          "legendFormat": "{{gender}}",
+          "instant": true,
+          "range": false
+        },
+        {
+          "refId": "B",
+          "expr": "(sum(increase(auth_account_events_total{job=\"monitoring/auth-service\",namespace=\"default\",event=\"signup\",gender=\"UNKNOWN\"}[$__range])) - (sum(increase(auth_account_events_total{job=\"monitoring/auth-service\",namespace=\"default\",event=\"gender_update\"}[$__range])) or vector(0))) > 0",
+          "legendFormat": "UNKNOWN",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "options": {
+        "pieType": "pie",
+        "displayLabels": [
+          "percent"
+        ],
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "values": [
+            "value",
+            "percent"
+          ]
+        }
+      },
+      "description": "Net counts from signups and gender changes observed in the selected time range. Updates to older accounts can contribute to Male or Female. Unknown is never displayed below zero."
+    }
+  ]
+}

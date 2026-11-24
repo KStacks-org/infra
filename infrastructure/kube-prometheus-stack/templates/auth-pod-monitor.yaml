@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: auth-service
+  labels:
+    release: {{ .Release.Name | quote }}
+spec:
+  namespaceSelector:
+    matchNames: [default]
+  selector:
+    matchLabels:
+      app: auth
+  podMetricsEndpoints:
+    - port: http
+      path: /auth/actuator/prometheus
+      interval: 60s

@@ -13,7 +13,26 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /auth/actuator/prometheus
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: auth-metrics-not-found
+    - matches:
+        - path:
+            type: PathPrefix
             value: /auth
       backendRefs:
         - name: auth-service
           port: 80
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: auth-metrics-not-found
+  namespace: {{ .Release.Namespace }}
+spec:
+  directResponse:
+    statusCode: 404

@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: cnpg-image-pin
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  images:
+    - major: 18
+      image: ghcr.io/cloudnative-pg/postgresql:18.3-minimal-trixie

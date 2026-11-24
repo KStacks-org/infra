@@ -14,3 +14,29 @@ spec:
     - port: metrics
       path: /metrics
       interval: 60s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: envoy-proxy
+  labels:
+    release: {{ .Release.Name | quote }}
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: envoy
+      app.kubernetes.io/component: proxy
+      gateway.envoyproxy.io/owning-gateway-name: kstacks-gateway
+      gateway.envoyproxy.io/owning-gateway-namespace: default
+  podMetricsEndpoints:
+    - port: metrics
+      path: /stats/prometheus
+      interval: 30s
+      metricRelabelings:
+        # Preserve the original cluster label so each route retains its own counter.
+        - sourceLabels: [envoy_cluster_name]
+          regex: 'backend/(.+)/(httproute|grpcroute)/[^/]+/[^/]+/[0-9]+'
+          targetLabel: backend_service
+          replacement: '$1'

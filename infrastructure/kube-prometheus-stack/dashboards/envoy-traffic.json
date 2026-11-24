@@ -1,0 +1,396 @@
+{
+  "uid": "envoy-traffic",
+  "title": "Envoy Gateway Traffic",
+  "tags": [
+    "envoy"
+  ],
+  "schemaVersion": 39,
+  "timezone": "browser",
+  "refresh": "1m",
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests in 24 hours",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Rolling upstream request count ending at the selected time. Includes traffic observed since monitoring began.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum(increase(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[1d])))",
+          "legendFormat": "Requests",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Requests in 7 days",
+      "type": "stat",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Rolling upstream request count ending at the selected time. Includes traffic observed since monitoring began.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum(increase(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[7d])))",
+          "legendFormat": "Requests",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Requests in 30 days",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Rolling upstream request count ending at the selected time. Includes traffic observed since monitoring began.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum(increase(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[30d])))",
+          "legendFormat": "Requests",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Top 10 backend services by requests",
+      "type": "bargauge",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 10,
+        "h": 12
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Ranked by upstream requests during the selected time range. Labels show namespace/service. Rules with multiple backends report a combined total.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(topk(10, sum by (backend_service)(increase(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[$__range]))))",
+          "legendFormat": "{{backend_service}}",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Rolling requests by service",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 10,
+        "y": 4,
+        "w": 14,
+        "h": 12
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Each point shows upstream requests in the selected lookback window ending at that timestamp.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum by (backend_service)(increase(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[${period}])))",
+          "legendFormat": "{{backend_service}}",
+          "instant": false,
+          "range": true,
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "showPoints": "auto"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "maxDataPoints": 1440
+    },
+    {
+      "id": 6,
+      "title": "Request rate by service",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (backend_service)(rate(envoy_cluster_upstream_rq_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[$__rate_interval]))",
+          "legendFormat": "{{backend_service}}",
+          "instant": false,
+          "range": true,
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Upstream bandwidth by service",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Bytes received from and sent to backend services by Envoy.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (backend_service)(rate(envoy_cluster_upstream_cx_rx_bytes_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[$__rate_interval]))",
+          "legendFormat": "{{backend_service}} received",
+          "instant": false,
+          "range": true,
+          "interval": "30s"
+        },
+        {
+          "refId": "B",
+          "expr": "sum by (backend_service)(rate(envoy_cluster_upstream_cx_tx_bytes_total{job=\"monitoring/envoy-proxy\",backend_service=~\"${scope:raw}\"}[$__rate_interval]))",
+          "legendFormat": "{{backend_service}} sent",
+          "instant": false,
+          "range": true,
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "scope",
+        "label": "Traffic scope",
+        "type": "custom",
+        "query": "Applications : (default|dev)/.+,All gateway traffic : .+",
+        "current": {
+          "text": "Applications",
+          "value": "(default|dev)/.+"
+        },
+        "options": [
+          {
+            "text": "Applications",
+            "value": "(default|dev)/.+",
+            "selected": true
+          },
+          {
+            "text": "All gateway traffic",
+            "value": ".+",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "name": "period",
+        "label": "Request lookback",
+        "type": "interval",
+        "query": "1h,1d,7d,30d",
+        "current": {
+          "text": "1h",
+          "value": "1h"
+        },
+        "auto": false,
+        "options": [
+          {
+            "text": "1h",
+            "value": "1h",
+            "selected": true
+          },
+          {
+            "text": "1d",
+            "value": "1d",
+            "selected": false
+          },
+          {
+            "text": "7d",
+            "value": "7d",
+            "selected": false
+          },
+          {
+            "text": "30d",
+            "value": "30d",
+            "selected": false
+          }
+        ]
+      }
+    ]
+  }
+}

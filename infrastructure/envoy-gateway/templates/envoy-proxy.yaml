@@ -1,0 +1,9 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: kstacks-gateway
+  namespace: default
+spec:
+  telemetry:
+    metrics:
+      clusterStatName: backend/%BACKEND_REFS%/%ROUTE_KIND%/%ROUTE_NAMESPACE%/%ROUTE_NAME%/%ROUTE_RULE_NUMBER%

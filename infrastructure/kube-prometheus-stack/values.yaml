@@ -1,5 +1,16 @@
 # Values for kube-prometheus-stack
 kube-prometheus-stack:
+  prometheus:
+    prometheusSpec:
+      retention: 45d
+      retentionSize: 40GB
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: [ReadWriteOnce]
+            resources:
+              requests:
+                storage: 50Gi
   grafana:
     admin:
       existingSecret: grafana-admin-infisical
